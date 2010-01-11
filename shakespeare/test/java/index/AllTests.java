@@ -1,5 +1,5 @@
 // (c) Copyright 2009 Cloudera, Inc.
-
+// Updated by Marcello de Sales (marcello.dsales@gmail.com)
 package index;
 
 import junit.framework.Test;
@@ -15,13 +15,15 @@ public final class AllTests  {
   private AllTests() { }
 
   public static Test suite() {
-    TestSuite suite = new TestSuite("Test for inverted index");
+    TestSuite suite = new TestSuite("Tests for the TF-IDF algorithm");
 
-    suite.addTestSuite(MapperTest.class);
-    suite.addTestSuite(ReducerTest.class);
+//    suite.addTestSuite(MapperTest.class);
+//    suite.addTestSuite(ReducerTest.class);
     suite.addTestSuite(WordFreqMapperTest.class);
     suite.addTestSuite(WordFreqReducerTest.class);
-    suite.addTestSuite(BetterStringTokenizerTest.class);
+    suite.addTestSuite(WordCountsForDocsMapperTest.class);
+    suite.addTestSuite(WordCountsForDocsReducerTest.class);
+//    suite.addTestSuite(BetterStringTokenizerTest.class);
 
     return suite;
   }
