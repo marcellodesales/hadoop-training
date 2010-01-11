@@ -13,8 +13,8 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 /**
- * LineIndexer Creates an inverted index over all the words in a document corpus, mapping each observed word to a list
- * of filename@offset locations where it occurs.
+ * WordCountsInDocuments counts the total number of words in each document and 
+ * produces data with the relative and total number of words for each document.
  */
 public class WordCountsInDocuments extends Configured implements Tool {
 

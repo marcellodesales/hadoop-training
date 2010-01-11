@@ -11,7 +11,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 /**
- * LineIndexReducer Takes a list of filename@offset entries for a single word and concatenates them into a list.
+ * WordCountsForDocsReducer counts the number of documents in the 
  */
 public class WordCountsForDocsReducer extends Reducer<Text, Text, Text, Text> {
 
@@ -21,8 +21,12 @@ public class WordCountsForDocsReducer extends Reducer<Text, Text, Text, Text> {
     /**
      * @param key is the key of the mapper
      * @param values are all the values aggregated during the mapping phase
-     * @param context contains the context of the job run PRE-CONDITION: receive a list of <"word", "filename@offset">
-     *            pairs <"a.txt", ["word1=3", "word2=5", "word3=5"]> POST-CONDITION: <"word1@a.txt, 3/13">,
+     * @param context contains the context of the job run 
+     * 
+     *        PRE-CONDITION: receive a list of <document, ["word=n", "word-b=x"]>
+     *            pairs <"a.txt", ["word1=3", "word2=5", "word3=5"]> 
+     *            
+     *       POST-CONDITION: <"word1@a.txt, 3/13">,
      *            <"word2@a.txt, 5/13">
      */
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {

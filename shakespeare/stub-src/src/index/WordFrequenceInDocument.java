@@ -33,7 +33,6 @@ public class WordFrequenceInDocument extends Configured implements Tool {
         job.setJarByClass(WordFrequenceInDocument.class);
         job.setMapperClass(WordFrequenceInDocMapper.class);
         job.setReducerClass(WordFrequenceInDocReducer.class);
-        job.setCombinerClass(WordFrequenceInDocReducer.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
