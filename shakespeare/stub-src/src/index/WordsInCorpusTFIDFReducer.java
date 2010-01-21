@@ -29,7 +29,7 @@ public class WordsInCorpusTFIDFReducer extends Reducer<Text, Text, Text, Text> {
      */
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         // get the number of documents indirectly from the file-system (stored in the job name on purpose)
-        int numberOfDocumentsInCorpus = Integer.parseInt(context.getJobName());
+        int numberOfDocumentsInCorpus = context.getConfiguration().getInt("docsInCorpus", 0);
         // total frequency of this word
         int numberOfDocumentsInCorpusWhereKeyAppears = 0;
         Map<String, String> tempFrequencies = new HashMap<String, String>();
