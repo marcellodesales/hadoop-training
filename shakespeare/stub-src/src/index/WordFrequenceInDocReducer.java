@@ -14,6 +14,8 @@ import org.apache.hadoop.mapreduce.Reducer;
  */
 public class WordFrequenceInDocReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
+    private IntWritable wordSum = new IntWritable();
+    
     public WordFrequenceInDocReducer() {
     }
 
@@ -35,6 +37,7 @@ public class WordFrequenceInDocReducer extends Reducer<Text, IntWritable, Text, 
             sum += val.get();
         }
         //write the key and the adjusted value (removing the last comma)
-        context.write(key, new IntWritable(sum));
+        this.wordSum.set(sum);
+        context.write(key, this.wordSum);
     }
 }

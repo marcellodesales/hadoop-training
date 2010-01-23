@@ -15,6 +15,9 @@ import org.apache.hadoop.mapreduce.Reducer;
  */
 public class WordCountsForDocsReducer extends Reducer<Text, Text, Text, Text> {
 
+    private Text wordAtDoc = new Text();
+    private Text wordAvar = new Text();
+    
     public WordCountsForDocsReducer() {
     }
 
@@ -38,8 +41,9 @@ public class WordCountsForDocsReducer extends Reducer<Text, Text, Text, Text> {
             sumOfWordsInDocument += Integer.parseInt(val.toString().split("=")[1]);
         }
         for (String wordKey : tempCounter.keySet()) {
-            context.write(new Text(wordKey + "@" + key.toString()), new Text(tempCounter.get(wordKey) + "/"
-                    + sumOfWordsInDocument));
+            this.wordAtDoc.set(wordKey + "@" + key.toString());
+            this.wordAvar.set(tempCounter.get(wordKey) + "/" + sumOfWordsInDocument);
+            context.write(this.wordAtDoc, this.wordAvar);
         }
     }
 }

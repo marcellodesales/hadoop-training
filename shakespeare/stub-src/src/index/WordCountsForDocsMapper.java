@@ -14,6 +14,9 @@ import org.apache.hadoop.mapreduce.Mapper;
  */
 public class WordCountsForDocsMapper extends Mapper<LongWritable, Text, Text, Text> {
     
+    private Text docName = new Text();
+    private Text wordAndCount = new Text();
+    
     public WordCountsForDocsMapper() {
     }
     
@@ -31,6 +34,8 @@ public class WordCountsForDocsMapper extends Mapper<LongWritable, Text, Text, Te
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String[] wordAndDocCounter = value.toString().split("\t");
         String[] wordAndDoc = wordAndDocCounter[0].split("@");
-        context.write(new Text(wordAndDoc[1]), new Text(wordAndDoc[0] + "=" + wordAndDocCounter[1]));
+        this.docName.set(wordAndDoc[1]);
+        this.wordAndCount.set(wordAndDoc[0] + "=" + wordAndDocCounter[1]);
+        context.write(this.docName, this.wordAndCount);
     }
 }

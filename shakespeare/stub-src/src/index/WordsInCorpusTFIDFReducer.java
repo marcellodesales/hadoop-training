@@ -18,6 +18,10 @@ public class WordsInCorpusTFIDFReducer extends Reducer<Text, Text, Text, Text> {
 
     private static final DecimalFormat DF = new DecimalFormat("###.########");
 
+    private Text wordAtDocument = new Text();
+    
+    private Text tfidfCounts = new Text();
+    
     public WordsInCorpusTFIDFReducer() {
     }
 
@@ -52,9 +56,12 @@ public class WordsInCorpusTFIDFReducer extends Reducer<Text, Text, Text, Text> {
             double tfIdf = numberOfDocumentsInCorpus == numberOfDocumentsInCorpusWhereKeyAppears ? 
                     tf : tf * Math.log10(idf);
 
-            context.write(new Text(key + "@" + document), new Text("[" + numberOfDocumentsInCorpusWhereKeyAppears + "/"
+            this.wordAtDocument.set(key + "@" + document);
+            this.tfidfCounts.set("[" + numberOfDocumentsInCorpusWhereKeyAppears + "/"
                     + numberOfDocumentsInCorpus + " , " + wordFrequenceAndTotalWords[0] + "/"
-                    + wordFrequenceAndTotalWords[1] + " , " + DF.format(tfIdf) + "]"));
+                    + wordFrequenceAndTotalWords[1] + " , " + DF.format(tfIdf) + "]");
+            
+            context.write(this.wordAtDocument, this.tfidfCounts);
         }
     }
 }

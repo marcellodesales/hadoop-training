@@ -19,9 +19,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
  */
 public class WordFrequenceInDocMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-    public WordFrequenceInDocMapper() {
-    }
-
     /**
      * Google's search Stopwords
      */
@@ -66,7 +63,23 @@ public class WordFrequenceInDocMapper extends Mapper<LongWritable, Text, Text, I
         googleStopwords.add("the");
         googleStopwords.add("www");
     }
+
+    /**
+     * Pattern used to select the words
+     */
+    private static final Pattern PATTERN = Pattern.compile("\\w+");
+    /**
+     * Default word 
+     */
+    private Text word = new Text();
+    /**
+     * Default single counter
+     */
+    private IntWritable singleCount = new IntWritable(1);
     
+    public WordFrequenceInDocMapper() {
+    }
+
     /**
      * @param key is the byte offset of the current line in the file;
      * @param value is the line from the file
@@ -77,8 +90,8 @@ public class WordFrequenceInDocMapper extends Mapper<LongWritable, Text, Text, I
      */
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         // Compile all the words using regex
-        Pattern p = Pattern.compile("\\w+");
-        Matcher m = p.matcher(value.toString());
+        
+        Matcher m = PATTERN.matcher(value.toString());
 
         // Get the name of the file from the inputsplit in the context
         String fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
@@ -96,7 +109,8 @@ public class WordFrequenceInDocMapper extends Mapper<LongWritable, Text, Text, I
             valueBuilder.append("@");
             valueBuilder.append(fileName);
             // emit the partial <k,v>
-            context.write(new Text(valueBuilder.toString()), new IntWritable(1));
+            this.word.set(valueBuilder.toString());
+            context.write(this.word, this.singleCount);
             valueBuilder.setLength(0);
         }
     }

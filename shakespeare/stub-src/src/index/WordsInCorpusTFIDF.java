@@ -21,11 +21,11 @@ import org.apache.hadoop.util.ToolRunner;
  */
 public class WordsInCorpusTFIDF extends Configured implements Tool {
     
-    // where to put the data in hdfs when we're done
-    private static final String OUTPUT_PATH = "1-word-freq";
-
     // where to read the data from.
     private static final String INPUT_PATH = "input";
+
+    // where to put the data in hdfs when we're done
+    private static final String OUTPUT_PATH = "1-word-freq";
     
     // where to put the data in hdfs when we're done
     private static final String OUTPUT_PATH_2 = "2-word-counts";
@@ -33,6 +33,9 @@ public class WordsInCorpusTFIDF extends Configured implements Tool {
     // where to put the data in hdfs when we're done
     private static final String OUTPUT_PATH_3 = "3-tf-idf";
 
+    /* (non-Javadoc)
+     * @see org.apache.hadoop.util.Tool#run(java.lang.String[])
+     */
     public int run(String[] args) throws Exception {
         
         Configuration conf = getConf();
