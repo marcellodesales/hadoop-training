@@ -29,7 +29,7 @@ public class LineIndexer extends Configured implements Tool {
         Configuration conf = getConf();
         Job job = new Job(conf, "Line Indexer 1");
 
-        job.setJarByClass(WordFrequenceInDocument.class);
+        job.setJarByClass(LineIndexer.class);
         job.setMapperClass(LineIndexMapper.class);
         job.setReducerClass(LineIndexReducer.class);
 
@@ -43,7 +43,7 @@ public class LineIndexer extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-        int res = ToolRunner.run(new Configuration(), new WordFrequenceInDocument(), args);
+        int res = ToolRunner.run(new Configuration(), new LineIndexer(), args);
         System.exit(res);
     }
 }
