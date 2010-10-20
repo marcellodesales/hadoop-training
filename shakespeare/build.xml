@@ -40,6 +40,14 @@
     <jar destfile="${jarname}" basedir="${bindir}" />
   </target>
 
+  <target name="run-lineindexer" depends="jar">
+    <exec executable="hadoop">
+     <arg value=""/>
+     <arg value="ant.bat"/>
+     <arg value="-p"/>
+    </exec>
+  </target>
+
   <target name="clean" description="Remove all compilation products to ensure a clean build">
     <delete dir="${bindir}" />
     <delete file="${jarname}" />
